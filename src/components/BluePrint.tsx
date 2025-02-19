@@ -1,6 +1,13 @@
 
 import styled from "styled-components";
-import { Character } from "../interfaces/Character.ts";
+import { Character } from "../interfaces/Character";
+
+const AllCharsDiv = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+`;
 
 const CharacterCard = styled.div`
     display: flex;
@@ -19,14 +26,14 @@ const CharacterCard = styled.div`
 `;
 
 const CharacterImage = styled.img`
-    width: 100%;                           
+    width: 100%;
     height: auto;
     margin: auto;
     border-radius: 5px;
 `;
 
 const CharacterName = styled.h1`
-    font-size: calc(6px + 1vw);   
+    font-size: calc(6px + 1vw);
     margin-bottom: calc(0.5vw + 5px);
 `;
 
@@ -42,18 +49,25 @@ const CharacterClass = styled.p`
     color: #ffd700;
 `;
 
-export default function BluePrint({ data }: { data: Character }) {
+export default function Blueprint(props: { data: Character[] }) {
     return (
-        <CharacterCard>
 
-            <CharacterName>{data.name}</CharacterName>
+        <AllCharsDiv>
+            {props.data.map((char) => (
+                <CharacterCard key={char.id}>
 
-            <CharacterTitle>{data.title}</CharacterTitle>
+                    <CharacterName>{char.name}</CharacterName>
 
-            <CharacterImage src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${data.id}_0.jpg`}alt={`image of ${data.name}`}/>
+                    <CharacterTitle>{char.title}</CharacterTitle>
 
-            <CharacterClass>Class: {data.tags.join(", ")}</CharacterClass>
+                    <CharacterImage
+                        src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${char.id}_0.jpg`}
+                        alt={`image of ${char.name}`}
+                    />
+                    <CharacterClass>Class: {char.tags.join(", ")}</CharacterClass>
 
-        </CharacterCard>
+                </CharacterCard>
+            ))}
+        </AllCharsDiv>
     );
 }
